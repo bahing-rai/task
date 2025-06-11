@@ -1,5 +1,7 @@
-package com.example.task1
+package com.example.task1.view
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -10,14 +12,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -29,7 +29,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -52,8 +51,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.task1.ui.theme.Task1Theme
-import kotlinx.coroutines.launch
+import com.example.task1.R
 
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,6 +65,7 @@ class LoginActivity : ComponentActivity() {
 
 @Composable
 fun LoginBody(){
+    var number : Int = 0
     //kunai pani variable dynamic chahiye ko cha bhane state variable use garne,
     //real time ma ui ma change chaiyo bhane state variable use garne
     var email by remember { mutableStateOf("") }
@@ -74,6 +73,8 @@ fun LoginBody(){
     var passwordVisibility by remember { mutableStateOf(false) }
     var rememberMe by remember { mutableStateOf(false) }
     val context = LocalContext.current
+    val activity = context as? Activity
+
     val coroutineScope = rememberCoroutineScope()
     val snackBarHostScope = remember { SnackbarHostState() }
     var showDialog by remember { mutableStateOf(false) }
@@ -87,6 +88,13 @@ fun LoginBody(){
                 .background(color = Color.White),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Text("$number") //
+
+            Button(onClick = {
+                number++
+            }) {Text("Click me") }
+
+
             Button(onClick = { showDialog = true }) {
                 Text("Show AlertDialog")
             }
@@ -233,17 +241,23 @@ fun LoginBody(){
 
             Spacer(modifier = Modifier.height(80.dp))
 
-            Column {
+            Column (verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally){
                 Button(
                     onClick = {
-                        if (email == "ram@gmail.com" && password == "password") {
+//                        if (email == "ram@gmail.com" && password == "password") {
+                            val intent = Intent(context, DashboardActivity::class.java)
+                            intent.putExtra("email", email) //1st parameter - key, 2nd parameter - value
+                            intent.putExtra("password", password)
+                            context.startActivity(intent)
+                            activity?.finish()
                             Toast.makeText(context, "Login Success", Toast.LENGTH_SHORT).show()
-                        } else {
-                            coroutineScope.launch {
-                                snackBarHostScope.showSnackbar("Invalid Login",
-                                    actionLabel = "Retry")
-                            }
-                        }
+//                        } else {
+//                            coroutineScope.launch {
+//                                snackBarHostScope.showSnackbar("Invalid Login",
+//                                    actionLabel = "Retry")
+//                            }
+//                        }
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -256,6 +270,13 @@ fun LoginBody(){
                 ) {
                     Text("Login")
                 }
+
+                Text("Don't have an account? Signup",
+                    modifier = Modifier.clickable{
+                        val intent = Intent(context, ProfileActivity::class.java)
+                        context.startActivity(intent)  // esma pardaina cus Signup pachi login mei aunu parcha
+//                        activity.finish()   stack bata hatauna; back aunu chaina bhane
+                    })
             }
         }
     }
@@ -263,7 +284,7 @@ fun LoginBody(){
 
 @Preview(showBackground = true)
 @Composable
-fun Prev(){
+fun PrevLogin(){
     LoginBody()
 }
 

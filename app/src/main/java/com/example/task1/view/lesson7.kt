@@ -1,4 +1,4 @@
-package com.example.task1
+package com.example.task1.view
 
 fun main(){
     println("Please enter a number :")

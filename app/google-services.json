@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "764840000082",
+    "firebase_url": "https://software-engineering-296da-default-rtdb.firebaseio.com",
+    "project_id": "software-engineering-296da",
+    "storage_bucket": "software-engineering-296da.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:764840000082:android:083590da1243b2a498fd8b",
+        "android_client_info": {
+          "package_name": "com.example.task1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_NcFUUL4sqzHgmyFiIFcD-3IYc1DFAoY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
